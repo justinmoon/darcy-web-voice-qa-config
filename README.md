@@ -1,0 +1,1 @@
+Temporary voice acceptance configuration. Synthetic test identities and audio only. No persistent volume; runtime storage disappears on restart. Never attach a production disk or use the production owner key.
