@@ -6,7 +6,7 @@ networks:
     egress: open
 containers:
   - name: agent
-    image: ghcr.io/justinmoon/darcy-web-tee-config@sha256:75f173f9edd5fab54eaf7d3957507eb23e719c01cc6cf3b5ea890e2d4fbbf5c1
+    image: ghcr.io/justinmoon/darcy-web-tee-config@sha256:dea159a6f42ec0aaabcc7eef7ceecad8166a3eefd7908344f7c6dbd94c5cf391
     cvm_admin: true
     read_only: true
     pids_limit: 128
