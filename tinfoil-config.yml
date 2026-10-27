@@ -1,31 +1,39 @@
 cvm-version: 0.14.16
 cpus: 2
 memory: 8192
+
 networks:
   agent:
     egress: open
+
+volumes:
+  - name: workspace
+    owner: "0:0"
+    exec: true
+
 containers:
   - name: agent
-    image: ghcr.io/justinmoon/darcy-web-tee-config@sha256:72305ff8a95866b1dca40c6c0539d5312900ef07a8021c143bc79c6f908c6ce5
+    image: ghcr.io/justinmoon/darcy-web-tee-config@sha256:ba2d87ca21faaa26aefb26a0c5a5e5a7697c2779ce25789dd88f98811876c21f
     cvm_admin: true
     read_only: true
     pids_limit: 128
     networks: [agent]
+    persistent_volumes: [workspace:/workspace]
     env:
-      - DARCY_OWNER_TOKEN_SHA256: "4845e66f6d606e2e6e86d410404f2918fcaad9cf49b162b6813d3d9e3880cc53"
-      - DARCY_WEB_ORIGIN: "https://darcy-voice-qa.invalid"
+      - DARCY_INVITE_CODE_SHA256: "5ec62c9eebc683c4f256205ae721a549aec61e6788dde26a1a115a49b3b0d4ab"
+      - DARCY_WEB_ORIGIN: "https://darcy-passkey-qa.invalid"
       - DARCY_INFERENCE_RELEASE_SHA256: "5233a27f1468f474d27c103e06c1a7a607e6a722ff4f9299ddf4e32fa87f201e"
-      - DARCY_INITIALIZE_NEW_VOLUME: "0"
-      - DARCY_WEB_EPHEMERAL_DEV: "1"
+      - DARCY_INITIALIZE_NEW_VOLUME: "1"
+      - DARCY_WEB_EPHEMERAL_DEV: "0"
       - DARCY_MARMOT_ENABLED: "1"
     secrets: [TINFOIL_API_KEY]
     tmpfs:
-      /workspace: rw,nosuid,nodev,size=256m,mode=755
       /config: rw,nosuid,nodev,size=64m,mode=755
       /tmp: rw,nosuid,nodev,size=1g,mode=1777
       /run: rw,nosuid,nodev,size=64m,mode=755
+
 shim:
   upstream-port: 8080
   authenticated: false
   paths: [/api, /healthz]
-  origins: [https://darcy-voice-qa.invalid]
+  origins: [https://darcy-passkey-qa.invalid]
